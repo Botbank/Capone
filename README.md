@@ -36,6 +36,8 @@
     - generation of RFC4122 UUIDS
 * pg
     - Non-blocking PostgreSQL client for Node.js. Pure JavaScript and optional native libpq bindings.
+* [ejs](https://ejs.co/)
+    - templating language that lets you generate HTML markup with plain JavaScript. 
 
 ## app.js
 * isEcho - message sent by the same page
