@@ -2,12 +2,23 @@
 
 # Tech Stack
 * Facebook App
+* Facebook Graph API 
+    - primary way to get data into and out of the Facebook platform.  It is an HTTP based
+        API that apps can use to programatically query data, post new stories, manage ads, upload photos,
+        and other tasks...
 * Facebook webhook
     - Webhooks are user defined HTTP callbacks.  They are usually triggered by some event.  When that event 
         occurs, the source site makes an HTTP request to the URL configured for the webhook.  Since they use
         HTTP, they can be integrated into web services without adding additional new infrastructure.
+
 * Facebook Messenger
+    - The Messenger Platform sends events to your webhook to notify your bot when a variety of interactions or      events happen, including when a person sends a message. Webhook events are sent by the Messenger           Platform as POST requests to your webhook.
+    - Postback - HTTP POST to the same page that the form is on.  The contents of the form are POSTed back to
+        the same URL as the form.  The server then refreshes the same page using the info it has just received.
+* Facebook Access Tokens
+    - https://developers.facebook.com/docs/facebook-login/access-tokens
 * Heroku
+    - Procfile - Heroku apps include a Procfile that specifies the commands that are executed by the app’s dynos.  [Procfile](https://devcenter.heroku.com/articles/procfile)
 * Dialogflow
 * Google Cloud Platform
     * Service Accounts
@@ -26,3 +37,5 @@
 * pg
     - Non-blocking PostgreSQL client for Node.js. Pure JavaScript and optional native libpq bindings.
 
+## app.js
+* isEcho - message sent by the same page
