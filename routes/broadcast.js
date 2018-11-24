@@ -4,12 +4,10 @@ const userService = require('../services/user-service');
 const fbService = require('../services/fb-service');
 const router = express.Router();
 
-
 router.get('/', function (req, res) {
     //res.send('Hello world, I am a chat bot')
     res.render('login');
 });
-
 
 router.get('/no-access', function (req, res) {
     res.render('no-access');

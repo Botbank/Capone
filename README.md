@@ -38,6 +38,13 @@
     - Non-blocking PostgreSQL client for Node.js. Pure JavaScript and optional native libpq bindings.
 * [ejs](https://ejs.co/)
     - templating language that lets you generate HTML markup with plain JavaScript. 
+* passport
+    - Passport is Express-compatible authentication middleware for Node.js.  Passport's sole purpose is to authenticate requests, which it does through an extensible set of plugins known as strategies. Passport does not mount routes or assume any particular database schema, which maximizes flexibility and allows application-level decisions to be made by the developer. The API is simple: you provide Passport a request to authenticate, and Passport provides hooks for controlling what occurs when authentication succeeds or fails.
+* passport-facebook
+    - Passport strategy for authenticating with Facebook using the OAuth 2.0 API.  This module lets you authenticate using Facebook in your Node.js applications. By plugging into Passport, Facebook authentication can be easily and unobtrusively integrated into any application or framework that supports Connect-style middleware, including Express.
+* npm express-session
+    - 
+* 
 
 ## app.js
 * isEcho - message sent by the same page
