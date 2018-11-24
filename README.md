@@ -46,5 +46,9 @@
     - 
 * 
 
+## Servers - configurations
+* https://botbank1.herokuapp.com/auth/facebook/callback
+
+
 ## app.js
 * isEcho - message sent by the same page
