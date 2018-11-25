@@ -8,8 +8,10 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
+const mongoose = require('mongoose');
 const pg = require('pg');
 pg.defaults.ssl = true;
+mongoose.connect('mongodb://localhost'); //connection string should come from the config file
 
 const broadcast = require('./routes/broadcast');
 const webviews = require('./routes/webviews');
@@ -75,7 +77,7 @@ if (!config.FB_APP_ID) { //app id
 //    throw new Error('missing FB_PAGE_INBOX_ID');
 //}
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 5000));
 
 //verify request came from facebook
 app.use(bodyParser.json({
@@ -93,7 +95,6 @@ app.use(bodyParser.urlencoded({
 // Process application/json
 app.use(bodyParser.json());
 
-
 app.use(session(
     {
         secret: 'keyboard cat',
@@ -101,7 +102,6 @@ app.use(session(
         saveUninitilized: true
     }
 ));
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -128,15 +128,10 @@ passport.use(new FacebookStrategy({
 
 app.get('/auth/facebook', passport.authenticate('facebook',{scope:'public_profile'}));
 
-
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { successRedirect : '/broadcast/broadcast', failureRedirect: '/broadcast' }));
 
-
-
 app.set('view engine', 'ejs');
-
-
 
 const credentials = {
     client_email: config.GOOGLE_CLIENT_EMAIL,
@@ -150,19 +145,16 @@ const sessionClient = new dialogflow.SessionsClient(
 	}
 );
 
-
 const sessionIds = new Map();
 const usersMap = new Map();
 
 // Index route
 app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
-})
+});
 
 app.use('/broadcast', broadcast);
 app.use('/webviews', webviews);
-
-
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
@@ -173,7 +165,7 @@ app.get('/webhook/', function (req, res) {
 		console.error("Failed validation. Make sure the validation tokens match.");
 		res.sendStatus(403);
 	}
-})
+});
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
@@ -487,7 +479,6 @@ function handleDialogFlowAction(sender, action, messages, contexts, parameters) 
             fbService.handleMessages(messages, sender);
 	}
 }
-
 
 function handleMessages(messages, sender) {
     let timeoutInterval = 1100;
@@ -832,4 +823,4 @@ function isDefined(obj) {
 // Spin up the server
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
-})
+});
