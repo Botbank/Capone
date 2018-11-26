@@ -9,9 +9,62 @@ const request = require('request');
 const app = express();
 const uuid = require('uuid');
 const mongoose = require('mongoose');
-const pg = require('pg');
-pg.defaults.ssl = true;
-mongoose.connect('mongodb://localhost'); //connection string should come from the config file
+//const pg = require('pg');
+//pg.defaults.ssl = true;
+
+mongoose.connect('mongodb://localhost/test_chatbot', { useNewUrlParser: true })
+    .then(() => console.log('Connected to MongoDB...'))
+    .catch(err => console.error('Could not connect to MongoDB...', err));
+//mongoose.connect(config.mongoURI, { useNewUrlParser: true });
+
+/**
+ * Once we define a schema, compile it into a model which gives us a class.
+ * Next, create an object based on that class.  
+ * This object maps to a document in a mongodb database.
+ */
+
+const customerSchema = new mongoose.Schema({
+    name: String,
+    tags: [ String ],
+    date: { type: Date, default: Date.now },
+    isCustomer: Boolean
+});
+
+const Customer = mongoose.model('Customer', customerSchema);
+
+async function createCustomer() {
+    const customer = new Customer({
+        name: 'Vuk Djukic',
+        tags: ['applicant', 'new'],
+        isCustomer: true
+    });
+    
+    const result = await customer.save(); 
+    console.log(result);
+}
+
+async function getCustomers() {
+    //eq (equal)
+    //ne (not equal)
+    //gt (greater than)
+    //gte (greater than or equal to)
+    //lt (less than)
+    //lte (less than or equal to)
+    //in
+    //nin (not in)
+
+
+    const customers = await Customer.find()
+    //    .find({ name: 'Vuk Djukic', isCustomer: true })
+    //    .find({ price: { $gte: 10, $lte: 20 }})
+        .find({  price: { $in:[10, 15, 20] }})
+        .limit(10)
+        .sort({name: 1})
+        .select({ name: 1, tags: 1 });
+    console.log(customers);
+}
+
+getCustomers();
 
 const broadcast = require('./routes/broadcast');
 const webviews = require('./routes/webviews');
